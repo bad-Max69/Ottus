@@ -6,154 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonViewSkyline"
-        android:layout_width="141dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:onClick="buttonSkyline"
-        android:text="Скайлан 3"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewSkyline"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageViewSkyline"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewSkyline" />
-
-    <Button
-        android:id="@+id/buttonViewHunter"
-        android:layout_width="141dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:onClick="buttonHunter"
-        android:text="Охотник на монстров"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewHunter"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageViewHunter"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewHunter" />
-
-    <Button
-        android:id="@+id/buttonViewMK"
-        android:layout_width="141dp"
-        android:layout_height="50dp"
-        android:onClick="buttonMK"
-        android:text="Мортал Комбат"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/ImageViewMK"
-        app:layout_constraintStart_toStartOf="@+id/ImageViewMK"
-        app:layout_constraintTop_toBottomOf="@+id/ImageViewMK" />
-
-    <TextView
-        android:id="@+id/textViewCommentsSkyline"
-        android:layout_width="141dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:inputType="textShortMessage"
-        android:text="TextView"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewSkyline"
-        app:layout_constraintStart_toStartOf="@+id/imageViewSkyline"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewSkyline" />
-
-    <TextView
-        android:id="@+id/textViewCommentsHunter"
-        android:layout_width="141dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:inputType="textShortMessage"
-        android:text="TextView"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewHunter"
-        app:layout_constraintStart_toStartOf="@+id/imageViewHunter"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewHunter" />
-
-    <ImageView
-        android:id="@+id/imageViewSkyline"
-        android:layout_width="141dp"
-        android:layout_height="217dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewHunter"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:srcCompat="@drawable/skyline3" />
-
-    <ImageView
-        android:id="@+id/imageViewHunter"
-        android:layout_width="141dp"
-        android:layout_height="217dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewSkyline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:srcCompat="@drawable/hunter" />
-
-    <TextView
-        android:id="@+id/textViewCommentsMK"
-        android:layout_width="141dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:inputType="textShortMessage"
-        android:text="TextView"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/ImageViewMK"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ImageViewMK"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewMK" />
-
     <ImageView
         android:id="@+id/imageViewLeague"
-        android:layout_width="141dp"
-        android:layout_height="217dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/buttonViewLeague"
         app:layout_constraintEnd_toStartOf="@+id/ImageViewMK"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/liga" />
 
+    <Button
+        android:id="@+id/buttonViewLeague"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:onClick="buttonLeague"
+        android:text="Лига справедливости"
+        app:layout_constraintBottom_toTopOf="@id/textViewCommentsLeague"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewLeague"
+        app:layout_constraintStart_toStartOf="@+id/imageViewLeague"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLeague" />
+
+    <TextView
+        android:id="@+id/textViewCommentsLeague"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewLeague"
+        app:layout_constraintStart_toStartOf="@+id/imageViewLeague"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewLeague" />
+
     <ImageView
         android:id="@+id/ImageViewMK"
-        android:layout_width="141dp"
-        android:layout_height="217dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/buttonViewMK"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toEndOf="@+id/imageViewLeague"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/mk" />
 
+    <Button
+        android:id="@+id/buttonViewSkyline"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:onClick="buttonSkyline"
+        android:text="Скайлан 3"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCommentsSkyline"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewSkyline"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSkyline"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSkyline" />
+
     <TextView
-        android:id="@+id/textViewCommentsLigue"
-        android:layout_width="141dp"
+        android:id="@+id/textViewCommentsMK"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:inputType="textShortMessage"
         android:text="TextView"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewLeague"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageViewLeague"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewLeague" />
-
-    <Button
-        android:id="@+id/buttonViewLeague"
-        android:layout_width="141dp"
-        android:layout_height="50dp"
-        android:onClick="buttonLeague"
-        android:text="Лига справедливости"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewLeague"
-        app:layout_constraintStart_toStartOf="@+id/imageViewLeague"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLeague" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/ImageViewMK"
+        app:layout_constraintStart_toStartOf="@+id/ImageViewMK"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewMK" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -161,5 +88,82 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/imageViewHunter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/buttonViewHunter"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSkyline"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/hunter" />
+
+    <Button
+        android:id="@+id/buttonViewHunter"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:onClick="buttonHunter"
+        android:text="Охотник на монстров"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCommentsHunter"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewHunter"
+        app:layout_constraintStart_toStartOf="@+id/imageViewHunter"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewHunter" />
+
+    <TextView
+        android:id="@+id/textViewCommentsHunter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:inputType="textShortMessage"
+        android:text="TextView"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewHunter"
+        app:layout_constraintStart_toStartOf="@+id/imageViewHunter"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewHunter" />
+
+    <ImageView
+        android:id="@+id/imageViewSkyline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/buttonViewSkyline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewHunter"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/skyline3" />
+
+    <Button
+        android:id="@+id/buttonViewMK"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:onClick="buttonMK"
+        android:text="Мортал Комбат"
+        app:layout_constraintBottom_toTopOf="@id/textViewCommentsMK"
+        app:layout_constraintEnd_toEndOf="@+id/ImageViewMK"
+        app:layout_constraintStart_toStartOf="@+id/ImageViewMK"
+        app:layout_constraintTop_toBottomOf="@+id/ImageViewMK" />
+
+    <TextView
+        android:id="@+id/textViewCommentsSkyline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:inputType="textShortMessage"
+        android:text="TextView"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewSkyline"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSkyline"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewSkyline" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

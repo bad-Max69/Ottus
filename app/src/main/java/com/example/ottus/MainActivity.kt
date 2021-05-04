@@ -2,11 +2,12 @@ package com.example.ottus
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.ottus.ActivitysForDetailedFilms.Film1
 import com.example.ottus.ActivitysForDetailedFilms.Film2
 import com.example.ottus.ActivitysForDetailedFilms.Film3
@@ -21,10 +22,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+// возвращаем значения переменных после смены состояния активити
         savedInstanceState?.let {
-               buttonActionList = savedInstanceState.getIntegerArrayList("1")!!
-           }
+            buttonActionList = savedInstanceState.getIntegerArrayList("1")!!
 
+            //возвращение текста и видимости комментов к лиги
+            val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
+            commentsLeague.apply {
+                text = savedInstanceState.getString("commentsLeagueSave")
+                visibility = savedInstanceState.getInt("visibility")
+            }
+
+        }
+//восстанавливаем цвета нажатых кнопок
         buttonActionList.toSet().forEach {
             val i = findViewById<Button>(it)
             i.setTextColor(Color.RED)
@@ -33,16 +43,43 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putIntegerArrayList("1", buttonActionList)
+        val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
+        outState.apply {
+            putString("commentsLeagueSave", commentsLeague.text.toString())
+            putInt("visibility", commentsLeague.visibility)
+
+        }
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            0 -> {
+                data.let {
+                    val textForViewCommentLeague = data?.getStringExtra("commentsLeagueFromAct")
+                    val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
+                    commentsLeague.text = textForViewCommentLeague
+                    if (textForViewCommentLeague!!.isNotEmpty()) commentsLeague.visibility = View.VISIBLE
+                }
+            }
+            1 -> TODO()
+            2 -> TODO()
+            3 -> TODO()
+        }
     }
 
     fun buttonLeague(view: View) {
         val intent = Intent(this, Film1::class.java)
         val buttonLeague = findViewById<Button>(R.id.buttonViewLeague)
+
         buttonLeague.setTextColor(Color.RED)
         buttonActionList.add(buttonLeague.id)
-        Log.e("Main", "film1, ${buttonActionList[0]}, ${buttonLeague.id}")
-        startActivity(intent)
+        val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
+        intent.putExtra("commentsLeague", commentsLeague.text)
+        startActivityForResult(intent, 0)
+
+
     }
 
     fun buttonMK(view: View) {
