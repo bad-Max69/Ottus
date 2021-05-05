@@ -1,5 +1,7 @@
 package com.example.ottus
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         outState.apply {
             putString("commentsLeagueSave", commentsLeague.text.toString())
             putInt("visibility", commentsLeague.visibility)
-
         }
         super.onSaveInstanceState(outState)
     }
@@ -107,5 +108,22 @@ class MainActivity : AppCompatActivity() {
         buttonActionList.add(buttonViewSkyline.id)
         Log.e("Main", "film2, ${buttonActionList.forEach { println(it) }}")
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        val dialBuilder = AlertDialog.Builder(this)
+        val dialI = DialogInterface.OnClickListener { _, res ->
+            if (res == -1)  finish() }
+
+        dialBuilder.apply {
+            setTitle("Really exit?")
+            setNegativeButton("Later", dialI)
+          //  setNeutralButton("Later", dialI)
+            setPositiveButton("Agree :(", dialI)
+
+            val dialog = dialBuilder.create()
+            dialog.show()
+        }
+        // super.onBackPressed()
     }
 }
