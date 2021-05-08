@@ -1,129 +1,76 @@
 package com.example.ottus
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ottus.ActivitysForDetailedFilms.Film1
-import com.example.ottus.ActivitysForDetailedFilms.Film2
-import com.example.ottus.ActivitysForDetailedFilms.Film3
-import com.example.ottus.ActivitysForDetailedFilms.Film4
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.ottus.Films.filmList
+import com.example.ottus.RecyclerView.ActivityForFavorite
+import com.example.ottus.RecyclerView.CustomItemAnimator
+import com.example.ottus.RecyclerView.FilmsAdapter
+import com.example.ottus.RecyclerView.FilmsItem
 
 class MainActivity : AppCompatActivity() {
-
-    private var buttonActionList = arrayListOf<Int>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.layout_for_recycler)
 
-// возвращаем значения переменных после смены состояния активити
-        savedInstanceState?.let {
-            buttonActionList = savedInstanceState.getIntegerArrayList("1")!!
-
-            //возвращение текста и видимости комментов к лиги
-            val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
-            commentsLeague.apply {
-                text = savedInstanceState.getString("commentsLeagueSave")
-                visibility = savedInstanceState.getInt("visibility")
-            }
-
-        }
-//восстанавливаем цвета нажатых кнопок
-        buttonActionList.toSet().forEach {
-            val i = findViewById<Button>(it)
-            i.setTextColor(Color.RED)
-        }
+        initRecycler()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putIntegerArrayList("1", buttonActionList)
-        val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
-        outState.apply {
-            putString("commentsLeagueSave", commentsLeague.text.toString())
-            putInt("visibility", commentsLeague.visibility)
-        }
-        super.onSaveInstanceState(outState)
-    }
+    private fun initRecycler(){
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewFilms)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = FilmsAdapter(LayoutInflater.from(this),  filmList)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            0 -> {
-                data.let {
-                    val textForViewCommentLeague = data?.getStringExtra("commentsLeagueFromAct")
-                    val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
-                    commentsLeague.text = textForViewCommentLeague
-                    if (textForViewCommentLeague!!.isNotEmpty()) commentsLeague.visibility = View.VISIBLE
+        //кнопка добавления элементов
+        findViewById<View>(R.id.buttonViewAdd).setOnClickListener(){
+            filmList.add(2 , FilmsItem("new Film", "newSub", R.drawable.ic_launcher_foreground))
+            recyclerView.adapter?.notifyItemInserted(3)
+        }
+        //кнопка удаления элементов
+        findViewById<View>(R.id.buttonViewDel).setOnClickListener(){
+            filmList.removeAt(3)
+            recyclerView.adapter?.notifyItemRemoved(3)
+        }
+
+        //кнопка перехода на активити со списком избранных фильмов
+        findViewById<View>(R.id.favorite).setOnClickListener(){
+            val intent = Intent(this, ActivityForFavorite::class.java)
+            startActivity(intent)
+
+        }
+
+        //Пагинация - подгрузка новых данных при достижении заданного конченого элемента
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == filmList.size -1) {
+                    filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
+                    filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
+                    filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
+                    filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
+
+                    recyclerView.adapter?.notifyItemRangeInserted(filmList.size - 1, filmList.size + 3)
                 }
+
+
             }
-            1 -> TODO()
-            2 -> TODO()
-            3 -> TODO()
+        })
+        // разделение элементов стандартной полоской
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        val myAnima = CustomItemAnimator()
+        recyclerView.itemAnimator =myAnima
+
+
+
+
         }
-    }
 
-    fun buttonLeague(view: View) {
-        val intent = Intent(this, Film1::class.java)
-        val buttonLeague = findViewById<Button>(R.id.buttonViewLeague)
-
-        buttonLeague.setTextColor(Color.RED)
-        buttonActionList.add(buttonLeague.id)
-        val commentsLeague = findViewById<TextView>(R.id.textViewCommentsLeague)
-        intent.putExtra("commentsLeague", commentsLeague.text)
-        startActivityForResult(intent, 0)
-
-
-    }
-
-    fun buttonMK(view: View) {
-        val intent = Intent(this, Film2::class.java)
-        val buttonMK = findViewById<Button>(R.id.buttonViewMK)
-        buttonMK.setTextColor(Color.RED)
-        buttonActionList.add(buttonMK.id)
-        Log.e("Main", "film2, ${buttonActionList.forEach { println(it) }}")
-        startActivity(intent)
-    }
-
-    fun buttonHunter(view: View) {
-        val intent = Intent(this, Film3::class.java)
-        val buttonViewHunter = findViewById<Button>(R.id.buttonViewHunter)
-        buttonViewHunter.setTextColor(Color.RED)
-        buttonActionList.add(buttonViewHunter.id)
-        Log.e("Main", "film2, ${buttonActionList.forEach { println(it) }}")
-        startActivity(intent)
-    }
-
-    fun buttonSkyline(view: View) {
-        val intent = Intent(this, Film4::class.java)
-        val buttonViewSkyline = findViewById<Button>(R.id.buttonViewSkyline)
-        buttonViewSkyline.setTextColor(Color.RED)
-        buttonActionList.add(buttonViewSkyline.id)
-        Log.e("Main", "film2, ${buttonActionList.forEach { println(it) }}")
-        startActivity(intent)
-    }
-
-    override fun onBackPressed() {
-        val dialBuilder = AlertDialog.Builder(this)
-        val dialI = DialogInterface.OnClickListener { _, res ->
-            if (res == -1)  finish() }
-
-        dialBuilder.apply {
-            setTitle("Really exit?")
-            setNegativeButton("Later", dialI)
-          //  setNeutralButton("Later", dialI)
-            setPositiveButton("Agree :(", dialI)
-
-            val dialog = dialBuilder.create()
-            dialog.show()
-        }
-        // super.onBackPressed()
-    }
 }

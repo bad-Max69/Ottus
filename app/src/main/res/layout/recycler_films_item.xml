@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_Film"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageFilmItem"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/titleFilmItem"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title"
+
+        />
+
+    <TextView
+        android:id="@+id/subTitleFilmItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+        app:layout_constraintTop_toBottomOf="@id/titleFilmItem"
+        tools:text="SubTitle"
+
+        />
+
+    <CheckBox
+        android:id="@+id/check_favor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkbox_selector"
+        app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
+        app:layout_constraintEnd_toEndOf="@id/imageFilmItem"
+
+
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

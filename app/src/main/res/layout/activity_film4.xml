@@ -21,7 +21,7 @@
         android:id="@+id/textViewDetailedSkyline"
         android:layout_width="369dp"
         android:layout_height="131dp"
-        android:text="@string/textSkyLine"
+        android:text="@string/detailedSkyLine"
         app:layout_constraintBottom_toTopOf="@+id/buttonViewLeagueInvite"
         app:layout_constraintEnd_toEndOf="@+id/imageViewSkylineDet"
         app:layout_constraintHorizontal_bias="0.5"
