@@ -13,6 +13,11 @@ import com.example.ottus.RecyclerView.ActivityForFavorite
 import com.example.ottus.RecyclerView.CustomItemAnimator
 import com.example.ottus.RecyclerView.FilmsAdapter
 import com.example.ottus.RecyclerView.FilmsItem
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter
+import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,13 +27,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.layout_for_recycler)
 
         initRecycler()
+
     }
 
     private fun initRecycler(){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewFilms)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = FilmsAdapter(LayoutInflater.from(this),  filmList)
+        recyclerView.adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(this),  filmList))
+        //recyclerView.adapter = FilmsAdapter())
 
         //кнопка добавления элементов
         findViewById<View>(R.id.buttonViewAdd).setOnClickListener(){
@@ -65,8 +72,8 @@ class MainActivity : AppCompatActivity() {
         })
         // разделение элементов стандартной полоской
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        val myAnima = CustomItemAnimator()
-        recyclerView.itemAnimator =myAnima
+
+        recyclerView.itemAnimator = ScaleInRightAnimator()
 
 
 
