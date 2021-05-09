@@ -6,15 +6,16 @@
 
     <TextView
         android:id="@+id/headerTextView"
+        android:textSize="18dp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="30dp"
+        android:background="@color/purple_200"
+        android:hapticFeedbackEnabled="true"
         android:text="Список фильмов"
-        android:textStyle="bold"
         android:textAlignment="center"
-        android:background="?attr/colorButtonNormal"
-        />
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

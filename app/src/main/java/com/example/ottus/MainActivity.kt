@@ -9,24 +9,27 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.Films.filmList
+import com.example.ottus.Fragment.FilmListFragment
 import com.example.ottus.RecyclerView.ActivityForFavorite
-import com.example.ottus.RecyclerView.CustomItemAnimator
 import com.example.ottus.RecyclerView.FilmsAdapter
 import com.example.ottus.RecyclerView.FilmsItem
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
-import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_for_recycler)
+        setContentView(R.layout.activity_layout_for_fragment)
 
-        initRecycler()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, FilmListFragment(), "FilmListFragment")
+                .commit()
+
+
+       // initRecycler()
 
     }
 
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         // разделение элементов стандартной полоской
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
+        //анимация списка
         recyclerView.itemAnimator = ScaleInRightAnimator()
 
 
