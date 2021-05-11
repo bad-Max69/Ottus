@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ottus.Films.filmFavorite
 import com.example.ottus.Films.filmList
 import com.example.ottus.Fragment.FilmListFragment
+import com.example.ottus.Fragment.FilmsFavoriteFragment
 import com.example.ottus.RecyclerView.ActivityForFavorite
 import com.example.ottus.RecyclerView.FilmsAdapter
 import com.example.ottus.RecyclerView.FilmsItem
@@ -28,6 +31,14 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, FilmListFragment(), "FilmListFragment")
                 .commit()
 
+        findViewById<Button>(R.id.fragment_buttonViewFavorite).setOnClickListener {
+            filmFavorite = filmList.filter { it.favorite }.toMutableList()
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, FilmsFavoriteFragment(), "FilmsFavoriteFragment")
+                    .addToBackStack(null)
+                    .commit()
+        }
 
        // initRecycler()
 
@@ -41,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         //recyclerView.adapter = FilmsAdapter())
 
         //кнопка добавления элементов
+
         findViewById<View>(R.id.buttonViewAdd).setOnClickListener(){
             filmList.add(2 , FilmsItem("new Film", "newSub", R.drawable.ic_launcher_foreground))
             recyclerView.adapter?.notifyItemInserted(3)

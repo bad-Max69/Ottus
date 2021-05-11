@@ -17,5 +17,5 @@ object Films {
 
     )
 
-    //var filmFavorite = mutableListOf<FilmsItem>()
+    var filmFavorite = mutableListOf<FilmsItem>()
 }

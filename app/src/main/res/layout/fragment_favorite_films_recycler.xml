@@ -14,14 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/recycler_films_item" />
 
-    <Button
-        android:id="@+id/fragment_buttonViewdel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Del"
 
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

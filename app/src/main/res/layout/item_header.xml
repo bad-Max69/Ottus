@@ -12,7 +12,7 @@
         android:background="@color/purple_200"
         android:hapticFeedbackEnabled="true"
         android:text="Список фильмов"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
