@@ -16,7 +16,9 @@ import com.example.ottus.RecyclerView.FilmsItem
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
-class FilmListFragment: Fragment() {
+class FilmListFragment : Fragment() {
+
+    var listener: OnFilmsClickListener? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,7 @@ class FilmListFragment: Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+        //Log.e("filmlistFr", filmList.forEach { print(it.favorite) }.toString())
         // разворачиваем лайоут всего фрагмента
         return inflater.inflate(R.layout.fragment_film_list_recycler, container, false)
     }
@@ -40,21 +43,26 @@ class FilmListFragment: Fragment() {
         //во входящий вью передается лайоут в котором уже ищем конкретные вьюхи
         val recyclerViewFilmListFragment = view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
         recyclerViewFilmListFragment.apply {
-            adapter = FilmsAdapter(LayoutInflater.from(context), filmList)
-            //anination при прокрутке
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context),  filmList))
+            //animation при прокрутке
+            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)})
+
+
+
+            //adapter = FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)}
+
             // разделение элементов
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
             // анимация добавления - удаления
             itemAnimator = ScaleInRightAnimator()
             //пагинация
-            addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == filmList.size -1) {
-                        filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random()}", "pagin", R.drawable.wish_in_24px))
+                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == filmList.size - 1) {
+                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
+                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
+                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
+                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
 
                         recyclerView.adapter?.notifyItemRangeInserted(filmList.size - 1, filmList.size + 3)
                     }
@@ -66,13 +74,16 @@ class FilmListFragment: Fragment() {
         }
 
         val buttonDel = view.findViewById<Button>(R.id.fragment_buttonViewdel)
-            buttonDel.setOnClickListener {
-                filmList.removeAt(3)
-                recyclerViewFilmListFragment.adapter?.notifyItemRemoved(3)
+        buttonDel.setOnClickListener {
+            filmList.removeAt(3)
+            recyclerViewFilmListFragment.adapter?.notifyItemRemoved(3)
         }
 
 
+    }
 
+    interface OnFilmsClickListener {
+        fun onFilmClick(item: FilmsItem)
 
     }
 }

@@ -17,5 +17,8 @@ object Films {
 
     )
 
-    var filmFavorite = mutableListOf<FilmsItem>()
+    var filmFavorite = mutableListOf<FilmsItem>(
+            FilmsItem("ntcn", "fdlfdf", R.drawable.ic_launcher_foreground)
+
+    )
 }

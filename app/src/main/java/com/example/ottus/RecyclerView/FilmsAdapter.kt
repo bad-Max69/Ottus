@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.R
 
-class FilmsAdapter(private val inflater: LayoutInflater, private val filmList: MutableList<FilmsItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilmsAdapter(
+        private val inflater: LayoutInflater,
+        private val filmList: MutableList<FilmsItem>,
+        private  val listener: ((filmItem: FilmsItem) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == HEADER_VIEW_TYPE)
             HeaderViewHolder(inflater.inflate(R.layout.item_header, parent, false))
@@ -23,15 +26,15 @@ class FilmsAdapter(private val inflater: LayoutInflater, private val filmList: M
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
        if (holder is FilmsViewHolder) {
            holder.bind(filmList[position-1])
-           holder.checkFafor.setOnCheckedChangeListener(null)
-           holder.checkFafor.isChecked = filmList[position-1].favorite
-           holder.checkFafor.setOnCheckedChangeListener{
-                   _, isChecked ->  filmList[position-1].favorite = isChecked
+           holder.itemView.setOnClickListener { listener?.invoke(filmList[position-1])}
 
+         //  holder.checkFavourite.setOnCheckedChangeListener(null)
 
-           }
+           holder.checkFavourite.isChecked = filmList[position-1].favorite
+           holder.checkFavourite.setOnCheckedChangeListener{
+               _, state ->  filmList[position-1].favorite = state  }
 
-          }
+       }
 
 
     }

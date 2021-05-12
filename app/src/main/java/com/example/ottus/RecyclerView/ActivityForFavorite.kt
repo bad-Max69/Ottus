@@ -1,8 +1,8 @@
+/*
 package com.example.ottus.RecyclerView
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.Films.filmList
@@ -22,8 +22,8 @@ class ActivityForFavorite : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewFilmsFavorite)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = FilmsAdapter(LayoutInflater.from(this), filmsFavor)
+        //recyclerView.adapter = FilmsAdapter(LayoutInflater.from(this), filmsFavor)
     }
 
 
-}
+}*/

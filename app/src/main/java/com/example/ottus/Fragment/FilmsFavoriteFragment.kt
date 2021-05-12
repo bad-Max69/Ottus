@@ -9,13 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.Films
-import com.example.ottus.Films.filmFavorite
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
+import com.example.ottus.RecyclerView.FilmsItem
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmsFavoriteFragment : Fragment() {
+
+    var listenerFavoriteFragment: FilmListFragment.OnFilmsClickListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite_films_recycler, container, false)
@@ -24,10 +26,10 @@ class FilmsFavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<RecyclerView>(R.id.fragment_recyclerView).apply {
+        view.findViewById<RecyclerView>(R.id.fragment_recyclerView_favorite).apply {
 
-            adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite)
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context),  Films.filmList))
+           // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
+            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context),  Films.filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)})
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             itemAnimator = ScaleInRightAnimator()
 
@@ -36,4 +38,10 @@ class FilmsFavoriteFragment : Fragment() {
 
 
     }
+
+    interface OnFilmsFavoriteClickListener {
+        fun onFilmClickFavorite(item: FilmsItem)
+
+    }
+
 }
