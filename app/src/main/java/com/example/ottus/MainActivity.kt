@@ -1,7 +1,6 @@
 package com.example.ottus
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ottus.Films.filmFavorite
@@ -10,12 +9,14 @@ import com.example.ottus.Fragment.FilmDetailedFragment
 import com.example.ottus.Fragment.FilmListFragment
 import com.example.ottus.Fragment.FilmsFavoriteFragment
 import com.example.ottus.RecyclerView.FilmsItem
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity :
-        AppCompatActivity(),
-        FilmListFragment.OnFilmsClickListener,
-        FilmsFavoriteFragment.OnFilmsFavoriteClickListener {
+    AppCompatActivity(),
+    FilmListFragment.OnFilmsClickListener,
+    FilmsFavoriteFragment.OnFilmsFavoriteClickListener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,41 +24,65 @@ class MainActivity :
         setContentView(R.layout.activity_layout_for_fragment)
 
 
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, FilmListFragment(), "FilmListFragment")
-                .commit()
+        makeCurrentFragment(FilmListFragment())
 
+        //создание и работа с меню навигации
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        findViewById<Button>(R.id.fragment_buttonViewFavorite).setOnClickListener {
-            filmFavorite = filmList.filter { it.favorite }.toMutableList()
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, FilmsFavoriteFragment(), "FilmsFavoriteFragment")
-                    .addToBackStack(null)
-                    .commit()
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.page_1 -> {
+
+                    makeCurrentFragment(FilmListFragment())
+                    Snackbar.make(
+                        findViewById(R.id.coordinatorLayoutMain),
+                        "dfsdfsdf",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAnchorView(bottomNavigationView)
+                        .show()
+                }
+                R.id.page_2 -> {
+                    filmFavorite = filmList.filter { it.favorite }.toMutableList()
+                    makeCurrentFragment(FilmsFavoriteFragment())
+
+                }
+            }
+            true
         }
+        // отключение повторного нажатия на выбранный элемент меню навигации
+        bottomNavigationView.setOnNavigationItemReselectedListener { _ -> Unit }
 
+    }
+
+
+    private fun makeCurrentFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
 
     }
 
 
     override fun onAttachFragment(fragment: Fragment) {
-       // super.onAttachFragment(fragment)
-
+        // super.onAttachFragment(fragment)
         when (fragment) {
             is FilmListFragment -> fragment.listener = this
             is FilmsFavoriteFragment -> fragment.listenerFavoriteFragment = this
         }
     }
 
-    private fun openFilmDetailedFragment(item: FilmsItem){
+    private fun openFilmDetailedFragment(item: FilmsItem) {
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, FilmDetailedFragment.newInstance(item), "FilmsFavoriteFragment")
-                .addToBackStack(null)
-                .commit()
+            .beginTransaction()
+            .replace(
+                R.id.fragment_container,
+                FilmDetailedFragment.newInstance(item),
+                "FilmsFavoriteFragment"
+            )
+            .addToBackStack(null)
+            .commit()
 
     }
 
@@ -68,6 +93,7 @@ class MainActivity :
     override fun onFilmClickFavorite(item: FilmsItem) {
         openFilmDetailedFragment(item)
     }
+
 
 }
 

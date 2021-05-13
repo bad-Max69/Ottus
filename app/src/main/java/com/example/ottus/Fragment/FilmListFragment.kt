@@ -44,8 +44,7 @@ class FilmListFragment : Fragment() {
         val recyclerViewFilmListFragment = view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
         recyclerViewFilmListFragment.apply {
             //animation при прокрутке
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)})
-
+            adapter = ScaleInAnimationAdapter(FilmsAdapter(context,LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)})
 
 
             //adapter = FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)}
@@ -55,6 +54,7 @@ class FilmListFragment : Fragment() {
 
             // анимация добавления - удаления
             itemAnimator = ScaleInRightAnimator()
+
             //пагинация
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -66,7 +66,6 @@ class FilmListFragment : Fragment() {
 
                         recyclerView.adapter?.notifyItemRangeInserted(filmList.size - 1, filmList.size + 3)
                     }
-
 
                 }
             })

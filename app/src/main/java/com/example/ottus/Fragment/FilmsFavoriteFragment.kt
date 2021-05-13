@@ -29,7 +29,7 @@ class FilmsFavoriteFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.fragment_recyclerView_favorite).apply {
 
            // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(LayoutInflater.from(context),  Films.filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)})
+            adapter = ScaleInAnimationAdapter(FilmsAdapter(context,LayoutInflater.from(context),  Films.filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)})
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             itemAnimator = ScaleInRightAnimator()
 
