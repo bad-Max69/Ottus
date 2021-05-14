@@ -34,21 +34,23 @@ class FilmsAdapter(
            holder.bind(filmList[position-1])
            holder.itemView.setOnClickListener { listener?.invoke(filmList[position-1])}
 
-         //  holder.checkFavourite.setOnCheckedChangeListener(null)
+           //holder.checkFavourite.setOnCheckedChangeListener(null)
 
-          // holder.checkFavourite.isChecked = filmList[position-1].favorite
+           holder.checkFavourite.setChecked(filmList[position-1].favorite)
            holder.checkFavourite.setOnCheckedChangeListener{
                _, isChecked ->  filmList[position-1].favorite = isChecked
 
+               //снэкбар при удалении
                if (!isChecked) {
 
                    Snackbar.make(
                        (context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
-                       "удален фильм ${holder.title}",
+                       "удален фильм: \"${holder.title.text}\"",
                        Snackbar.LENGTH_LONG
                    )
                        .setAnchorView((context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
                        .setAction("отменить"){
+                           holder.checkFavourite.isChecked = true
                            filmList[position-1].favorite = true
                        }
                        .show()

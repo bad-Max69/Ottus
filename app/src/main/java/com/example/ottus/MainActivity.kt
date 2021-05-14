@@ -10,7 +10,6 @@ import com.example.ottus.Fragment.FilmListFragment
 import com.example.ottus.Fragment.FilmsFavoriteFragment
 import com.example.ottus.RecyclerView.FilmsItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity :
@@ -31,17 +30,7 @@ class MainActivity :
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.page_1 -> {
-
-                    makeCurrentFragment(FilmListFragment())
-                    Snackbar.make(
-                        findViewById(R.id.coordinatorLayoutMain),
-                        "dfsdfsdf",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAnchorView(bottomNavigationView)
-                        .show()
-                }
+                R.id.page_1 -> makeCurrentFragment(FilmListFragment())
                 R.id.page_2 -> {
                     filmFavorite = filmList.filter { it.favorite }.toMutableList()
                     makeCurrentFragment(FilmsFavoriteFragment())
