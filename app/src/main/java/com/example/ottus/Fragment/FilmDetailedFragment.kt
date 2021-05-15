@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsItem
 
@@ -33,9 +34,9 @@ class FilmDetailedFragment(): Fragment() {
         val title = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         val subTitle = view.findViewById<TextView>(R.id.description)
 
-
-
-        imageView.setImageResource(item.imageFilm)
+        // Glide - оптимизатор изображений
+        Glide.with(context).load(item.imageFilm).into(imageView)
+       //imageView.setImageResource(item.imageFilm)
         title.title = item.title
         subTitle.text = item.subtitle
     }

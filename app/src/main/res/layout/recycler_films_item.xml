@@ -1,59 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_Film"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardElevation="6dp">
 
-    <ImageView
-        android:id="@+id/imageFilmItem"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/titleFilmItem"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/imageFilmItem"
-
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title"
-
-        />
-
-    <TextView
-        android:id="@+id/subTitleFilmItem"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:maxLines="4"
-        android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageFilmItem"
-        app:layout_constraintTop_toBottomOf="@id/titleFilmItem"
-        tools:text="SubTitle"
-
-        />
-
-    <CheckBox
-        android:id="@+id/check_favor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/checkbox_selector"
-        app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
-        app:layout_constraintEnd_toEndOf="@id/imageFilmItem"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-        />
+        <ImageView
+            android:id="@+id/imageFilmItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            android:adjustViewBounds="true"/>
+
+        <TextView
+            android:id="@+id/titleFilmItem"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title"
+
+            />
+
+        <TextView
+            android:id="@+id/subTitleFilmItem"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+
+            app:layout_constraintTop_toBottomOf="@id/titleFilmItem"
+            tools:text="SubTitle" />
+
+        <CheckBox
+            android:id="@+id/check_favor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
+            app:layout_constraintEnd_toEndOf="@id/imageFilmItem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -3,6 +3,7 @@ package com.example.ottus.RecyclerView
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +14,13 @@ class FilmsAdapter(
         private  val context: Context,
         private val inflater: LayoutInflater,
         private val filmList: MutableList<FilmsItem>,
-        private  val listener: ((filmItem: FilmsItem) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        private  val listener: ((filmItem: FilmsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == HEADER_VIEW_TYPE)
             HeaderViewHolder(inflater.inflate(R.layout.item_header, parent, false))
         else
-            FilmsViewHolder(inflater.inflate(R.layout.recycler_films_item, parent, false))
+            FilmsViewHolder(context, inflater.inflate(R.layout.recycler_films_item, parent, false))
 
     }
 
@@ -32,9 +33,9 @@ class FilmsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
        if (holder is FilmsViewHolder) {
            holder.bind(filmList[position-1])
-           holder.itemView.setOnClickListener { listener?.invoke(filmList[position-1])}
+           holder.itemView.setOnClickListener { listener?.invoke(filmList[position-1], holder.title, holder.subTitle, holder.imageFilm)}
 
-           //holder.checkFavourite.setOnCheckedChangeListener(null)
+           holder.checkFavourite.setOnCheckedChangeListener(null)
 
            holder.checkFavourite.setChecked(filmList[position-1].favorite)
            holder.checkFavourite.setOnCheckedChangeListener{

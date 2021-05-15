@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.Films.filmList
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
 import com.example.ottus.RecyclerView.FilmsItem
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmListFragment : Fragment() {
@@ -28,9 +26,10 @@ class FilmListFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         //Log.e("filmlistFr", filmList.forEach { print(it.favorite) }.toString())
         // разворачиваем лайоут всего фрагмента
         return inflater.inflate(R.layout.fragment_film_list_recycler, container, false)
@@ -41,16 +40,28 @@ class FilmListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //во входящий вью передается лайоут в котором уже ищем конкретные вьюхи
-        val recyclerViewFilmListFragment = view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
+        val recyclerViewFilmListFragment =
+            view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
         recyclerViewFilmListFragment.apply {
             //animation при прокрутке
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(context,LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)})
+            adapter = FilmsAdapter(
+                    context,
+                    LayoutInflater.from(context),
+                    filmList
+                ) { item, sharedTitle, sharedSubTitle, sharedImage ->
+                    listener?.onFilmClick(
+                        item,
+                        sharedTitle,
+                        sharedSubTitle,
+                        sharedImage
+                    )
+                }
 
 
             //adapter = FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)}
 
             // разделение элементов
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            // addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
             // анимация добавления - удаления
             itemAnimator = ScaleInRightAnimator()
@@ -59,12 +70,39 @@ class FilmListFragment : Fragment() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == filmList.size - 1) {
-                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
-                        filmList.add(FilmsItem("${Math.random() * 10}", "pagin", R.drawable.wish_in_24px))
+                        filmList.add(
+                            FilmsItem(
+                                "${Math.random() * 10}",
+                                "pagin",
+                                R.drawable.wish_in_24px
+                            )
+                        )
+                        filmList.add(
+                            FilmsItem(
+                                "${Math.random() * 10}",
+                                "pagin",
+                                R.drawable.wish_in_24px
+                            )
+                        )
+                        filmList.add(
+                            FilmsItem(
+                                "${Math.random() * 10}",
+                                "pagin",
+                                R.drawable.wish_in_24px
+                            )
+                        )
+                        filmList.add(
+                            FilmsItem(
+                                "${Math.random() * 10}",
+                                "pagin",
+                                R.drawable.wish_in_24px
+                            )
+                        )
 
-                        recyclerView.adapter?.notifyItemRangeInserted(filmList.size - 1, filmList.size + 3)
+                        recyclerView.adapter?.notifyItemRangeInserted(
+                            filmList.size - 1,
+                            filmList.size + 3
+                        )
                     }
 
                 }
@@ -78,11 +116,10 @@ class FilmListFragment : Fragment() {
             recyclerViewFilmListFragment.adapter?.notifyItemRemoved(3)
         }
 
-
     }
 
     interface OnFilmsClickListener {
-        fun onFilmClick(item: FilmsItem)
+        fun onFilmClick(item: FilmsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View)
 
     }
 }

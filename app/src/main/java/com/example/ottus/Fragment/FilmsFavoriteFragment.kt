@@ -19,7 +19,11 @@ class FilmsFavoriteFragment : Fragment() {
 
     var listenerFavoriteFragment: FilmListFragment.OnFilmsClickListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_favorite_films_recycler, container, false)
     }
 
@@ -28,8 +32,13 @@ class FilmsFavoriteFragment : Fragment() {
 
         view.findViewById<RecyclerView>(R.id.fragment_recyclerView_favorite).apply {
 
-           // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
-            adapter = ScaleInAnimationAdapter(FilmsAdapter(context,LayoutInflater.from(context),  Films.filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)})
+            // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
+            adapter = ScaleInAnimationAdapter(
+                FilmsAdapter(
+                    context,
+                    LayoutInflater.from(context),
+                    Films.filmFavorite
+                ) { item, sharedTitle, sharedSubTitle, sharedImage -> listenerFavoriteFragment?.onFilmClick(item, sharedTitle, sharedSubTitle, sharedImage) })
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             itemAnimator = ScaleInRightAnimator()
 
@@ -40,7 +49,7 @@ class FilmsFavoriteFragment : Fragment() {
     }
 
     interface OnFilmsFavoriteClickListener {
-        fun onFilmClickFavorite(item: FilmsItem)
+        fun onFilmClickFavorite(item: FilmsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View)
 
     }
 
