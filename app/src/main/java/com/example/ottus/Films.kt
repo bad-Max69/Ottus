@@ -21,4 +21,8 @@ object Films {
             FilmsItem("ntcn", "fdlfdf", R.drawable.ic_launcher_foreground)
 
     )
+
+    var MoviesTMDB: MutableList<ResultsItem> = mutableListOf()
+
+
 }

@@ -35,7 +35,7 @@ class FilmDetailedFragment(): Fragment() {
         val subTitle = view.findViewById<TextView>(R.id.description)
 
         // Glide - оптимизатор изображений
-        Glide.with(context).load(item.imageFilm).into(imageView)
+        context?.let { Glide.with(it).load(item.imageFilm).into(imageView) }
        //imageView.setImageResource(item.imageFilm)
         title.title = item.title
         subTitle.text = item.subtitle
