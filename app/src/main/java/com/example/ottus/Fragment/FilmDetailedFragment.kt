@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.ottus.Network.ResultsItem
 import com.example.ottus.R
-import com.example.ottus.RecyclerView.FilmsItem
 
 class FilmDetailedFragment(): Fragment() {
 
@@ -28,22 +28,22 @@ class FilmDetailedFragment(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val item = arguments?.getSerializable("bundleDetailed") as FilmsItem
+        val item = arguments?.getSerializable("bundleDetailed") as ResultsItem
 
         val imageView = view.findViewById<ImageView>(R.id.fragment_detailed_imageview)
         val title = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         val subTitle = view.findViewById<TextView>(R.id.description)
 
         // Glide - оптимизатор изображений
-        context?.let { Glide.with(it).load(item.imageFilm).into(imageView) }
+        context?.let { Glide.with(it).load(item.getPosterPath).into(imageView) }
        //imageView.setImageResource(item.imageFilm)
         title.title = item.title
-        subTitle.text = item.subtitle
+        subTitle.text = item.overview
     }
 
     companion object{
 
-        fun newInstance(item: FilmsItem): FilmDetailedFragment{
+        fun newInstance(item: ResultsItem): FilmDetailedFragment{
             val fragment = FilmDetailedFragment()
 
             val bundle = Bundle()

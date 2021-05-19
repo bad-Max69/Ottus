@@ -49,8 +49,9 @@ data class Response(
 	@field:SerializedName("runtime")
 	val runtime: Int? = null,
 
-	@field:SerializedName("poster_path")
+	@SerializedName("poster_path")
 	val posterPath: String? = null,
+
 
 	@field:SerializedName("spoken_languages")
 	val spokenLanguages: List<SpokenLanguagesItem?>? = null,
@@ -78,7 +79,9 @@ data class Response(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+) {
+
+}
 
 data class GenresItem(
 

@@ -5,8 +5,7 @@
     android:transitionOrdering="together"
     >
 
-
-       <changeTransform/>
+    <changeTransform/>
 
 
 </transitionSet>

@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ottus.Films.favoriteSet
+import com.example.ottus.Network.ResultsItem
 import com.example.ottus.R
 import com.google.android.material.snackbar.Snackbar
 
 class FilmsAdapter(
-        private  val context: Context,
-        private val inflater: LayoutInflater,
-        private val filmList: MutableList<FilmsItem>,
-        private  val listener: ((filmItem: FilmsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val context: Context,
+    private val inflater: LayoutInflater,
+    private val filmList: MutableList<ResultsItem?>,
+    private val listener: ((filmItem: ResultsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == HEADER_VIEW_TYPE)
@@ -32,14 +34,17 @@ class FilmsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
        if (holder is FilmsViewHolder) {
-           holder.bind(filmList[position-1])
-           holder.itemView.setOnClickListener { listener?.invoke(filmList[position-1], holder.title, holder.subTitle, holder.imageFilm)}
+           filmList[position-1]?.let { holder.bind(it) }
+           holder.itemView.setOnClickListener { filmList[position-1]?.let { it1 ->
+               listener?.invoke(
+                   it1, holder.title, holder.subTitle, holder.imageFilm)
+           } }
 
-           holder.checkFavourite.setOnCheckedChangeListener(null)
+          // holder.checkFavourite.setOnCheckedChangeListener(null)
 
-           holder.checkFavourite.setChecked(filmList[position-1].favorite)
+         //  holder.checkFavourite.setChecked(filmList[position-1].favorite)
            holder.checkFavourite.setOnCheckedChangeListener{
-               _, isChecked ->  filmList[position-1].favorite = isChecked
+               _, isChecked ->  filmList[position-1]?.let { favoriteSet.add(it) }
 
                //снэкбар при удалении
                if (!isChecked) {
@@ -52,7 +57,7 @@ class FilmsAdapter(
                        .setAnchorView((context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
                        .setAction("отменить"){
                            holder.checkFavourite.isChecked = true
-                           filmList[position-1].favorite = true
+                          // filmList[position-1].favorite = true
                        }
                        .show()
                }

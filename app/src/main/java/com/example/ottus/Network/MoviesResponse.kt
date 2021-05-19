@@ -1,6 +1,7 @@
-package com.example.ottus
+package com.example.ottus.Network
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MoviesResponse(
 
@@ -11,7 +12,7 @@ data class MoviesResponse(
 	val totalPages: Int? = null,
 
 	@field:SerializedName("results")
-	val results: List<ResultsItem?>? = null,
+	val results: MutableList<ResultsItem?>? = null,
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
@@ -37,8 +38,8 @@ data class ResultsItem(
 	@field:SerializedName("genre_ids")
 	val genreIds: List<Int?>? = null,
 
-	@field:SerializedName("poster_path")
-	val posterPath: String? = null,
+	/*@field:SerializedName("poster_path")
+	val posterPath: String? = null,*/
 
 	@field:SerializedName("backdrop_path")
 	val backdropPath: String? = null,
@@ -60,4 +61,12 @@ data class ResultsItem(
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null
-)
+): Serializable {
+	@SerializedName("poster_path")
+	var getPosterPath: String? = null
+		get() = "https://image.tmdb.org/t/p/w500$field"
+
+
+	}
+
+

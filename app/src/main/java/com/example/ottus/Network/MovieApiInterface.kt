@@ -1,6 +1,5 @@
 package com.example.ottus.Network
 
-import com.example.ottus.MoviesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,8 +7,9 @@ import retrofit2.http.Query
 
 interface MovieApiInterface {
     @GET("movie/top_rated")
-    fun getTopRatedMovies(
+    fun getTopRatedMoviesI(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("page") page: Int
     ): Call<MoviesResponse>
 }

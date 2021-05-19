@@ -1,5 +1,6 @@
 package com.example.ottus
 
+import com.example.ottus.Network.ResultsItem
 import com.example.ottus.RecyclerView.FilmsItem
 
 object Films {
@@ -17,12 +18,9 @@ object Films {
 
     )
 
-    var filmFavorite = mutableListOf<FilmsItem>(
-            FilmsItem("ntcn", "fdlfdf", R.drawable.ic_launcher_foreground)
+    var favoriteSet = mutableSetOf<ResultsItem>()
 
-    )
-
-    var MoviesTMDB: MutableList<ResultsItem> = mutableListOf()
+    var moviesTMDB: MutableList<ResultsItem?> = mutableListOf()
 
 
 }

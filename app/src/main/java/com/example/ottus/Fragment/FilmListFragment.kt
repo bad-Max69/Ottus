@@ -1,17 +1,18 @@
 package com.example.ottus.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Films.filmList
+import com.example.ottus.Films.moviesTMDB
+import com.example.ottus.Network.ResultsItem
+import com.example.ottus.Network.TopRatedMovies
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
-import com.example.ottus.RecyclerView.FilmsItem
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmListFragment : Fragment() {
@@ -44,11 +45,8 @@ class FilmListFragment : Fragment() {
             view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
         recyclerViewFilmListFragment.apply {
             //animation при прокрутке
-            adapter = FilmsAdapter(
-                    context,
-                    LayoutInflater.from(context),
-                    filmList
-                ) { item, sharedTitle, sharedSubTitle, sharedImage ->
+            adapter = FilmsAdapter(context, LayoutInflater.from(context),moviesTMDB)
+            { item, sharedTitle, sharedSubTitle, sharedImage ->
                     listener?.onFilmClick(
                         item,
                         sharedTitle,
@@ -56,7 +54,7 @@ class FilmListFragment : Fragment() {
                         sharedImage
                     )
                 }
-
+            Log.e("StartApp", "start Adapter")
 
             //adapter = FilmsAdapter(LayoutInflater.from(context), filmList){ listener?.onFilmClick(it)}
 
@@ -69,40 +67,12 @@ class FilmListFragment : Fragment() {
             //пагинация
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == filmList.size - 1) {
-                        filmList.add(
-                            FilmsItem(
-                                "${Math.random() * 10}",
-                                "pagin",
-                                R.drawable.wish_in_24px
-                            )
-                        )
-                        filmList.add(
-                            FilmsItem(
-                                "${Math.random() * 10}",
-                                "pagin",
-                                R.drawable.wish_in_24px
-                            )
-                        )
-                        filmList.add(
-                            FilmsItem(
-                                "${Math.random() * 10}",
-                                "pagin",
-                                R.drawable.wish_in_24px
-                            )
-                        )
-                        filmList.add(
-                            FilmsItem(
-                                "${Math.random() * 10}",
-                                "pagin",
-                                R.drawable.wish_in_24px
-                            )
-                        )
+                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == moviesTMDB.size - 3) {
+                        Log.e("SizeTMDB", "before ${moviesTMDB.size}")
+                        TopRatedMovies.getTopRatedMovies()
+                        Log.e("SizeTMDB", "after ${moviesTMDB.size}")
 
-                        recyclerView.adapter?.notifyItemRangeInserted(
-                            filmList.size - 1,
-                            filmList.size + 3
-                        )
+                        recyclerView.adapter?.notifyItemRangeInserted(moviesTMDB.size-1, moviesTMDB.size + 20)
                     }
 
                 }
@@ -110,16 +80,17 @@ class FilmListFragment : Fragment() {
 
         }
 
-        val buttonDel = view.findViewById<Button>(R.id.fragment_buttonViewdel)
+        //удаление элемента с уведомлением адаптера
+     /*   val buttonDel = view.findViewById<Button>(R.id.fragment_buttonViewdel)
         buttonDel.setOnClickListener {
             filmList.removeAt(3)
             recyclerViewFilmListFragment.adapter?.notifyItemRemoved(3)
-        }
+        }*/
 
     }
 
     interface OnFilmsClickListener {
-        fun onFilmClick(item: FilmsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View)
+        fun onFilmClick(item: ResultsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View)
 
     }
 }
