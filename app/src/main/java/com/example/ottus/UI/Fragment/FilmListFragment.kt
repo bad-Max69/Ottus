@@ -1,4 +1,4 @@
-package com.example.ottus.Fragment
+package com.example.ottus.UI.Fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Films.moviesTMDB
-import com.example.ottus.Network.ResultsItem
-import com.example.ottus.Network.TopRatedMovies
+import com.example.ottus.Model.Films.moviesTMDB
+import com.example.ottus.Model.Network.ResultsItem
+import com.example.ottus.Model.Network.TopRatedMovies
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
@@ -43,6 +43,8 @@ class FilmListFragment : Fragment() {
         //во входящий вью передается лайоут в котором уже ищем конкретные вьюхи
         val recyclerViewFilmListFragment =
             view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
+
+
         recyclerViewFilmListFragment.apply {
             //animation при прокрутке
             adapter = FilmsAdapter(context, LayoutInflater.from(context),moviesTMDB)
@@ -67,7 +69,8 @@ class FilmListFragment : Fragment() {
             //пагинация
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == moviesTMDB.size - 3) {
+                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == moviesTMDB.size - 1) {
+
                         Log.e("SizeTMDB", "before ${moviesTMDB.size}")
                         TopRatedMovies.getTopRatedMovies()
                         Log.e("SizeTMDB", "after ${moviesTMDB.size}")

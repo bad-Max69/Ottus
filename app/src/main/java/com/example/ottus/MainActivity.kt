@@ -1,16 +1,18 @@
 package com.example.ottus
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.ottus.Fragment.FilmDetailedFragment
-import com.example.ottus.Fragment.FilmListFragment
-import com.example.ottus.Fragment.FilmsFavoriteFragment
-import com.example.ottus.Network.ResultsItem
-import com.example.ottus.Network.TopRatedMovies
+import com.example.ottus.Model.Network.ResultsItem
+import com.example.ottus.Model.Network.TopRatedMovies
+import com.example.ottus.UI.Fragment.FilmDetailedFragment
+import com.example.ottus.UI.Fragment.FilmListFragment
+import com.example.ottus.UI.Fragment.FilmsFavoriteFragment
+import com.example.ottus.UI.Fragment.SplashDownloadFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -24,15 +26,10 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layout_for_fragment)
 
-        Log.e("StartApp", " OnCreate")
         TopRatedMovies.getTopRatedMovies()
 
 
-
-        makeCurrentFragment(FilmListFragment())
-
-
-
+        makeCurrentFragment(SplashDownloadFragment())
 
 
         //создание и работа с меню навигации
@@ -41,8 +38,13 @@ class MainActivity :
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.page_1 -> makeCurrentFragment(FilmListFragment())
-                R.id.page_2 -> makeCurrentFragment(FilmsFavoriteFragment())
+                R.id.page_1 -> {
+                    makeCurrentFragment(FilmListFragment())
+
+                }
+                R.id.page_2 -> {
+                    makeCurrentFragment(FilmsFavoriteFragment())
+                }
             }
             true
         }
@@ -51,51 +53,6 @@ class MainActivity :
         bottomNavigationView.setOnNavigationItemReselectedListener { _ -> Unit }
 
     }
-
-    override fun onStart() {
-        super.onStart()
-
-        Log.e("StartApp", "FilmListFragmentOnStart")
-
-    }
-
-
-    /*//retrofit
-    // делаем запрос в ТМДБ
-    private fun getTopRatedMovies() {
-
-        var responseTMDB = false
-        var pages = 1
-
-        val callTopRatedMovies = MovieApiClient.apiClient
-            .getTopRatedMoviesI(API_KEY, "ru", pages)
-        Log.e("StartApp", " OnCreate")
-
-        // Получаем результат
-        callTopRatedMovies.enqueue(object : Callback<MoviesResponse> {
-
-            override fun onResponse(
-                call: Call<MoviesResponse>,
-                response: Response<MoviesResponse>
-            ) {
-                response.body()?.results?.let { moviesTMDB.addAll(it) }
-                responseTMDB = response.isSuccessful
-                pages++
-
-                Films.moviesTMDB.forEach { movie -> Log.e("movies", movie?.getPosterPath.orEmpty()) }
-                Log.e("StartApp", "getDataTMDB")
-            }
-
-
-            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                // Log error here since request failed
-                Log.e("failData", t.toString())
-            }
-        })
-
-    }
-*/
-
 
 
     private fun makeCurrentFragment(fragment: Fragment) {
@@ -157,11 +114,25 @@ class MainActivity :
         openFilmDetailedFragment(item, sharedTitle, sharedSubTitle, sharedImage)
     }
 
-    companion object {
 
-        private const val API_KEY = "e6cb68048343238dadf3afda6a0f928f"
+    override fun onBackPressed() {
+        val dialBuilder = AlertDialog.Builder(this)
+        val dialI = DialogInterface.OnClickListener { _, res ->
+            if (res == -1) finish()
+        }
+
+        dialBuilder.apply {
+            setTitle("Правда хочешь выйти?")
+            setNegativeButton("Нет, остаюсь", dialI)
+            //  setNeutralButton("Later", dialI)
+            setPositiveButton("Да :(", dialI)
+
+            val dialog = dialBuilder.create()
+            dialog.show()
+        }
+
+
     }
-
 }
 
 

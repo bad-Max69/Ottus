@@ -1,4 +1,4 @@
-package com.example.ottus.Fragment
+package com.example.ottus.UI.Fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Films
+import com.example.ottus.Model.Films
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
-import com.example.ottus.Network.ResultsItem
+import com.example.ottus.Model.Network.ResultsItem
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 

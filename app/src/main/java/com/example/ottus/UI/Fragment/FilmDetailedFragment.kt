@@ -1,4 +1,4 @@
-package com.example.ottus.Fragment
+package com.example.ottus.UI.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.ottus.Network.ResultsItem
+import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 
 class FilmDetailedFragment(): Fragment() {

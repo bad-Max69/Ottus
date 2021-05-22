@@ -1,4 +1,4 @@
-package com.example.ottus.Network
+package com.example.ottus.Model.Network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

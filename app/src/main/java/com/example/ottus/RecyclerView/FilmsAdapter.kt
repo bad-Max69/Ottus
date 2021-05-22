@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Films.favoriteSet
-import com.example.ottus.Network.ResultsItem
+import com.example.ottus.Model.Films.favoriteSet
+import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 import com.google.android.material.snackbar.Snackbar
 

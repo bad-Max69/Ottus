@@ -1,4 +1,4 @@
-package com.example.ottus.Network
+package com.example.ottus.Model.Network
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

@@ -1,7 +1,7 @@
-package com.example.ottus.Network
+package com.example.ottus.Model.Network
 
 import android.util.Log
-import com.example.ottus.Films
+import com.example.ottus.Model.Films
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
