@@ -1,10 +1,10 @@
-package com.example.ottus.Model
+package com.example.ottus.Model.Repo
 
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsItem
 
-object Films {
+object Movies {
 
     val filmList = mutableListOf<FilmsItem>(
         FilmsItem( "Лига справедливости", "Вдохновившись самопожертвованием Супермена, Брюс Уэйн вновь обретает веру в человечество. Он заручается поддержкой новой союзницы Дианы Принс, чтобы сразиться с ещё более могущественным противником. Бэтмен и Чудо-женщина набирают команду сверхлюдей для борьбы с пробудившейся угрозой",
@@ -37,7 +37,7 @@ object Films {
 
     var favoriteSet = mutableSetOf<ResultsItem>()
 
-    var moviesTMDB: MutableList<ResultsItem?> = mutableListOf()
+    var moviesTMDB: MutableList<ResultsItem> = mutableListOf()
 
 
 }

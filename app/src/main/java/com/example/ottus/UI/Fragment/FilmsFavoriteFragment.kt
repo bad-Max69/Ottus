@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Model.Films
+import com.example.ottus.Model.Repo.Movies
+import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
-import com.example.ottus.Model.Network.ResultsItem
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
@@ -37,7 +37,7 @@ class FilmsFavoriteFragment : Fragment() {
                 FilmsAdapter(
                     context,
                     LayoutInflater.from(context),
-                    Films.favoriteSet.toMutableList()
+                    Movies.favoriteSet.toMutableList()
                 ) { item, sharedTitle, sharedSubTitle, sharedImage -> listenerFavoriteFragment?.onFilmClick(item, sharedTitle, sharedSubTitle, sharedImage) })
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             itemAnimator = ScaleInRightAnimator()

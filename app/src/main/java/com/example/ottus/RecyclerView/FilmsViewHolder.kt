@@ -1,7 +1,6 @@
 package com.example.ottus.RecyclerView
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -26,7 +25,7 @@ class FilmsViewHolder (var context: Context, item: View): RecyclerView.ViewHolde
 
         //обработчик изображений, т.к. по уомлчанию загружается полная картинка
         Glide.with(context).load(item.getPosterPath).into(imageFilm)
-        Log.e("glide", item.getPosterPath)
+        //Log.e("glide", item.getPosterPath)
         //imageFilm.setImageResource(item.imageFilm)
        // checkFavourite.isChecked = item.favorite
 

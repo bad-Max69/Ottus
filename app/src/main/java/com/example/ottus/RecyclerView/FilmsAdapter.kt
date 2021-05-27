@@ -7,16 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Model.Films.favoriteSet
 import com.example.ottus.Model.Network.ResultsItem
+import com.example.ottus.Model.Repo.Movies
+import com.example.ottus.Model.Repo.Movies.favoriteSet
 import com.example.ottus.R
 import com.google.android.material.snackbar.Snackbar
 
 class FilmsAdapter(
     private val context: Context,
     private val inflater: LayoutInflater,
-    private val filmList: MutableList<ResultsItem?>,
-    private val listener: ((filmItem: ResultsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val filmList: MutableList<ResultsItem>,
+    private val listener: ((filmItem: ResultsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    fun refreshDataMovies() {
+
+        notifyItemRangeInserted(Movies.moviesTMDB.size - 1, Movies.moviesTMDB.size + 20)
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == HEADER_VIEW_TYPE)
@@ -26,6 +34,7 @@ class FilmsAdapter(
 
     }
 
+
     override fun getItemCount() = filmList.size + 1 // в список элементов добавляется Header
 
     override fun getItemViewType(position: Int): Int {
@@ -33,41 +42,45 @@ class FilmsAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       if (holder is FilmsViewHolder) {
-           filmList[position-1]?.let { holder.bind(it) }
-           holder.itemView.setOnClickListener { filmList[position-1]?.let { it1 ->
-               listener?.invoke(
-                   it1, holder.title, holder.subTitle, holder.imageFilm)
-           } }
+        if (holder is FilmsViewHolder) {
+            holder.bind(filmList[position - 1])
+            holder.itemView.setOnClickListener {
+                listener?.invoke(
+                    filmList[position - 1],
+                    holder.title,
+                    holder.subTitle,
+                    holder.imageFilm
+                )
 
-          // holder.checkFavourite.setOnCheckedChangeListener(null)
+            }
 
-         //  holder.checkFavourite.setChecked(filmList[position-1].favorite)
-           holder.checkFavourite.setOnCheckedChangeListener{
-               _, isChecked ->  filmList[position-1]?.let { favoriteSet.add(it) }
+            // holder.checkFavourite.setOnCheckedChangeListener(null)
 
-               //снэкбар при удалении
-               if (!isChecked) {
+            //  holder.checkFavourite.setChecked(filmList[position-1].favorite)
+            holder.checkFavourite.setOnCheckedChangeListener { _, isChecked ->
+                favoriteSet.add(filmList[position - 1])
 
-                   Snackbar.make(
-                       (context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
-                       "удален фильм: \"${holder.title.text}\"",
-                       Snackbar.LENGTH_LONG
-                   )
-                       .setAnchorView((context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
-                       .setAction("отменить"){
-                           holder.checkFavourite.isChecked = true
-                          // filmList[position-1].favorite = true
-                       }
-                       .show()
-               }
+                //снэкбар при удалении
+                if (!isChecked) {
 
+                    Snackbar.make(
+                        (context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
+                        "удален фильм: \"${holder.title.text}\"",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAnchorView((context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
+                        .setAction("отменить") {
+                            holder.checkFavourite.isChecked = true
+                            // filmList[position-1].favorite = true
 
-           }
+                            refreshDataMovies()
+                        }
+                        .show()
+                }
 
-       }
+            }
 
-
+        }
     }
 
 

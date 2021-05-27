@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ottus.Model.Films.moviesTMDB
+import com.example.ottus.Model.MoviesViewModel
 import com.example.ottus.Model.Network.ResultsItem
-import com.example.ottus.Model.Network.TopRatedMovies
+import com.example.ottus.Model.Repo.Movies.moviesTMDB
 import com.example.ottus.R
 import com.example.ottus.RecyclerView.FilmsAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmListFragment : Fragment() {
+    private val moviesViewModel: MoviesViewModel by viewModels()
+
 
     var listener: OnFilmsClickListener? = null
 
@@ -23,7 +27,7 @@ class FilmListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        retainInstance = true
+        moviesViewModel.getMoviesForView()
     }
 
     override fun onCreateView(
@@ -31,7 +35,6 @@ class FilmListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //Log.e("filmlistFr", filmList.forEach { print(it.favorite) }.toString())
         // разворачиваем лайоут всего фрагмента
         return inflater.inflate(R.layout.fragment_film_list_recycler, container, false)
     }
@@ -44,10 +47,9 @@ class FilmListFragment : Fragment() {
         val recyclerViewFilmListFragment =
             view.findViewById<RecyclerView>(R.id.fragment_recyclerView)
 
-
         recyclerViewFilmListFragment.apply {
-            //animation при прокрутке
-            adapter = FilmsAdapter(context, LayoutInflater.from(context),moviesTMDB)
+
+            adapter = FilmsAdapter(context, LayoutInflater.from(context), moviesTMDB)
             { item, sharedTitle, sharedSubTitle, sharedImage ->
                     listener?.onFilmClick(
                         item,
@@ -55,6 +57,7 @@ class FilmListFragment : Fragment() {
                         sharedSubTitle,
                         sharedImage
                     )
+
                 }
             Log.e("StartApp", "start Adapter")
 
@@ -71,17 +74,24 @@ class FilmListFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == moviesTMDB.size - 1) {
 
-                        Log.e("SizeTMDB", "before ${moviesTMDB.size}")
-                        TopRatedMovies.getTopRatedMovies()
-                        Log.e("SizeTMDB", "after ${moviesTMDB.size}")
+                        moviesViewModel.getMoviesForView()
 
-                        recyclerView.adapter?.notifyItemRangeInserted(moviesTMDB.size-1, moviesTMDB.size + 20)
+
+                        Log.e("LivePag", "after ${moviesTMDB.size}")
+
+
                     }
 
                 }
             })
 
         }
+        //подписка на лайфдату
+        moviesViewModel.moviesRepo.observe(this.viewLifecycleOwner, Observer {
+        Log.e("Live", "сработала лайв")
+        recyclerViewFilmListFragment.adapter!!.notifyDataSetChanged()})
+
+
 
         //удаление элемента с уведомлением адаптера
      /*   val buttonDel = view.findViewById<Button>(R.id.fragment_buttonViewdel)

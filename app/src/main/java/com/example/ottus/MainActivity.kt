@@ -1,18 +1,15 @@
 package com.example.ottus
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ottus.Model.Network.ResultsItem
-import com.example.ottus.Model.Network.TopRatedMovies
 import com.example.ottus.UI.Fragment.FilmDetailedFragment
 import com.example.ottus.UI.Fragment.FilmListFragment
 import com.example.ottus.UI.Fragment.FilmsFavoriteFragment
-import com.example.ottus.UI.Fragment.SplashDownloadFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -26,11 +23,12 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layout_for_fragment)
 
-        TopRatedMovies.getTopRatedMovies()
+        //TopRatedMoviesInterractor.getTopRatedMovies()
 
 
-        makeCurrentFragment(SplashDownloadFragment())
-
+       // makeCurrentFragment(SplashDownloadFragment())
+        Log.e("Live", "act on creat film list frag")
+        makeCurrentFragment(FilmListFragment())
 
         //создание и работа с меню навигации
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -115,7 +113,8 @@ class MainActivity :
     }
 
 
-    override fun onBackPressed() {
+    /*override fun onBackPressed() {
+
         val dialBuilder = AlertDialog.Builder(this)
         val dialI = DialogInterface.OnClickListener { _, res ->
             if (res == -1) finish()
@@ -132,7 +131,7 @@ class MainActivity :
         }
 
 
-    }
+    }*/
 }
 
 
