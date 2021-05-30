@@ -13,14 +13,12 @@ object TopRatedMoviesInterractor {
     private val TAG = MainActivity::class.java.simpleName
     private const val API_KEY = BuildConfig.THE_MOVIE_DATABASE_API
 
-    var responseTMDB = false
     private var pages = 1
 
 
-    //retrofit
-    // делаем запрос в ТМДБ
+    //retrofit, делаем запрос в ТМДБ
 
-    fun getTopRatedMovies() {
+    fun getTopRatedMovies(callback: GetRepoCallback) {
 
         val callTopRatedMovies = MovieApiClient.apiClient
             .getTopRatedMoviesI(API_KEY, "ru", pages)
@@ -31,18 +29,16 @@ object TopRatedMoviesInterractor {
             override fun onResponse(
                 call: Call<MoviesResponse>, response: Response<MoviesResponse>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     Movies.moviesTMDB.addAll(response.body()!!.results!!)
-                    responseTMDB = response.isSuccessful
                     pages++
-                    Log.e("Live", "get movies from retrofit")
+                    callback.onSucces(Movies.moviesTMDB)
+                    Log.e("Live", "get movies from retrofit $pages")
                 } else {
                     Log.e("Live", "bad response ${response.code().toString()}")
 
                     response.code().toString()
                 }
-
-
 
             }
             /* Films.moviesTMDB.forEach { movie -> Log.e("movies", movie?.getPosterPath.orEmpty()) }
@@ -55,11 +51,13 @@ object TopRatedMoviesInterractor {
                 Log.e("failData", t.toString())
             }
         })
-
     }
 
+    interface GetRepoCallback {
+        fun onSucces(moviesRepos: MutableList<ResultsItem>)
 
 
-
-
+    }
 }
+
+

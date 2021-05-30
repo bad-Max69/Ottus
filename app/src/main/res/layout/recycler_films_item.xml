@@ -26,17 +26,33 @@
 
         <TextView
             android:id="@+id/titleFilmItem"
-            android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:textSize="10pt"
             android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@+id/rateView"
+
             app:layout_constraintStart_toEndOf="@id/imageFilmItem"
-
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title"
+            tools:text="Title" />
 
-            />
+        <TextView
+            android:id="@+id/rateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:drawableStart="@drawable/rate_star"
+            android:paddingEnd="8dp"
+            android:textSize="8pt"
+            android:textStyle="normal|bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="908" />
 
         <TextView
             android:id="@+id/subTitleFilmItem"
@@ -47,13 +63,14 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:ellipsize="end"
-            android:maxLines="4"
+            android:maxLines="2"
+            android:textSize="8pt"
             app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageFilmItem"
 
             app:layout_constraintTop_toBottomOf="@id/titleFilmItem"
-            tools:text="SubTitle" />
+            tools:text="SubTitle SubTitle SubTitle SubTitle SubTitle SubTitle SubTitle " />
 
         <CheckBox
             android:id="@+id/check_favor"

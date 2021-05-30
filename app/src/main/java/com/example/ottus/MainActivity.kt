@@ -1,72 +1,47 @@
 package com.example.ottus
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ottus.Model.Network.ResultsItem
-import com.example.ottus.UI.Fragment.FilmDetailedFragment
-import com.example.ottus.UI.Fragment.FilmListFragment
-import com.example.ottus.UI.Fragment.FilmsFavoriteFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.ottus.UI.Fragment.MainFragment
 
 
 class MainActivity :
-    AppCompatActivity(),
-    FilmListFragment.OnFilmsClickListener,
-    FilmsFavoriteFragment.OnFilmsFavoriteClickListener {
+    AppCompatActivity()
+  //  FilmListFragment.OnFilmsClickListener,
+   // FilmsFavoriteFragment.OnFilmsFavoriteClickListener
+{
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layout_for_fragment)
 
-        //TopRatedMoviesInterractor.getTopRatedMovies()
-
 
        // makeCurrentFragment(SplashDownloadFragment())
         Log.e("Live", "act on creat film list frag")
-        makeCurrentFragment(FilmListFragment())
-
-        //создание и работа с меню навигации
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.page_1 -> {
-                    makeCurrentFragment(FilmListFragment())
-
-                }
-                R.id.page_2 -> {
-                    makeCurrentFragment(FilmsFavoriteFragment())
-                }
-            }
-            true
-        }
-
-        // отключение повторного нажатия на выбранный элемент меню навигации
-        bottomNavigationView.setOnNavigationItemReselectedListener { _ -> Unit }
+        makeCurrentFragment(MainFragment())
 
     }
 
 
     private fun makeCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container_Root, fragment)
             .commit()
 
     }
 
-    override fun onAttachFragment(fragment: Fragment) {
+    /*override fun onAttachFragment(fragment: Fragment) {
         // super.onAttachFragment(fragment)
         when (fragment) {
             is FilmListFragment -> fragment.listener = this
             is FilmsFavoriteFragment -> fragment.listenerFavoriteFragment = this
         }
-    }
+    }*/
 
     private fun openFilmDetailedFragment(
         item: ResultsItem,
@@ -75,7 +50,7 @@ class MainActivity :
         sharedImage: View
     ) {
 
-        val sharedElementFragment = FilmDetailedFragment.newInstance(item).apply {
+   /*     val sharedElementFragment = FilmDetailedFragment.newInstance(item).apply {
             sharedElementEnterTransition = TransitionInflater.from(this@MainActivity)
                 .inflateTransition(R.transition.simple_transition)
         }
@@ -92,9 +67,9 @@ class MainActivity :
             )
             .addToBackStack(null)
             .commit()
-    }
+    }*/
 
-    override fun onFilmClick(
+  /*  override fun onFilmClick(
         item: ResultsItem,
         sharedTitle: View,
         sharedSubTitle: View,
@@ -110,7 +85,7 @@ class MainActivity :
         sharedImage: View
     ) {
         openFilmDetailedFragment(item, sharedTitle, sharedSubTitle, sharedImage)
-    }
+    }*/
 
 
     /*override fun onBackPressed() {
@@ -129,9 +104,9 @@ class MainActivity :
             val dialog = dialBuilder.create()
             dialog.show()
         }
+*/
 
-
-    }*/
+    }
 }
 
 

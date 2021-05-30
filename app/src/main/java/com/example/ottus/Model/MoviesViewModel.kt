@@ -1,38 +1,40 @@
 package com.example.ottus.Model
 
-import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.Model.Network.TopRatedMoviesInterractor
 import com.example.ottus.Model.Repo.Movies
-import com.example.ottus.Model.Repo.Movies.moviesTMDB
 
-class MoviesViewModel :ViewModel() {
-    private val moviesRepoLiveData = MutableLiveData<MutableList<ResultsItem>>()
-    private val moviesFavoriteLiveData = MutableLiveData<MutableSet<ResultsItem>>()
+class MoviesViewModel : ViewModel() {
+    private val moviesRepoLiveData = MutableLiveData<MutableList<ResultsItem>>(Movies.moviesTMDB)
+    private val moviesFavoriteLiveData =
+        MutableLiveData<MutableList<ResultsItem>>(Movies.favoriteSet.toMutableList())
 
 
     val moviesRepo: LiveData<MutableList<ResultsItem>>
         get() = moviesRepoLiveData
 
-    val moviesFavorite: LiveData<MutableSet<ResultsItem>>
+    val moviesFavorite: LiveData<MutableList<ResultsItem>>
         get() = moviesFavoriteLiveData
 
-    init {
-     moviesRepoLiveData.postValue(moviesTMDB)
 
-        Log.e("Live", "init livedata ${moviesTMDB.size}")
+    fun getMoviesForView() {
+        TopRatedMoviesInterractor.getTopRatedMovies(object :
+            TopRatedMoviesInterractor.GetRepoCallback {
+            override fun onSucces(moviesRepos: MutableList<ResultsItem>) {
+                moviesRepoLiveData.value = moviesRepos
+            }
+        })
+        //moviesRepoLiveData.postValue(moviesTMDB)
 
-     moviesFavoriteLiveData.postValue(Movies.favoriteSet)
     }
 
-fun getMoviesForView(){
-    TopRatedMoviesInterractor.getTopRatedMovies()
-    moviesRepoLiveData.postValue(moviesTMDB)
 
-}
+
+
 
 
 
