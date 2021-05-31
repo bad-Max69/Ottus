@@ -58,6 +58,7 @@ class FilmsAdapter(
                 )
                 Log.e("Listner", "FilmAdapter ${listener.toString()}")
 
+
             }
 
             // holder.checkFavourite.setOnCheckedChangeListener(null)
@@ -71,11 +72,11 @@ class FilmsAdapter(
 
                     Snackbar.make(
                         (holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
-                        "Удалить из избранного фильм: \"${holder.title.text.toString().toUpperCase()}\"?",
+                        "Удалить избранный фильм: \"${holder.title.text.toString().capitalize()}\"?",
                         Snackbar.LENGTH_LONG
                     )
                         .setAnchorView((holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
-                        .setAction("отменить удаление") {
+                        .setAction("отменить") {
                             holder.checkFavourite.isChecked = true
 
 

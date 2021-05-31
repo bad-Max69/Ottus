@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.transition.TransitionInflater
+import androidx.fragment.app.FragmentTransaction
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -67,11 +67,25 @@ class MainFragment : Fragment(),
 
 
     private fun makeCurrentFragment(fragment: Fragment) {
+
       childFragmentManager.beginTransaction()
           .replace(R.id.fragment_container_Main, fragment)
+          .addToBackStack(null)
           .commit()
 
+
+
+
+
     }
+
+    override fun onAttachFragment(fragment: Fragment) {
+     // super.onAttachFragment(fragment)
+     when (fragment) {
+         is FilmListFragment -> fragment.listener = this
+         is FilmsFavoriteFragment -> fragment.listenerFavoriteFragment = this
+     }
+ }
 
 
 
@@ -81,23 +95,27 @@ class MainFragment : Fragment(),
         sharedSubTitle: View,
         sharedImage: View
     ) {
-        val sharedElementFragment = FilmDetailedFragment.newInstance(item).apply {
-        sharedElementEnterTransition = TransitionInflater.from(context)
+        val sharedElementFragment = FilmDetailedFragment.newInstance(item)
+   /*         .apply {
+        sharedElementEnterTransition = TransitionInflater.from(view?.context)
             .inflateTransition(R.transition.simple_transition)
-    }
+    }*/
 
         childFragmentManager
             .beginTransaction()
-            .addSharedElement(sharedTitle, "sharedTitle")
+            //.addSharedElement(sharedTitle, "sharedTitle")
             //.addSharedElement(sharedSubTitle, "sharedSubTitle")
-            .addSharedElement(sharedImage, "sharedImage")
+            //.addSharedElement(sharedImage, "sharedImage")
             .replace(
                 R.id.fragment_container_Main,
                 sharedElementFragment,
                 "FilmsFavoriteFragment"
             )
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .addToBackStack(null)
             .commit()
+
+
     }
 
       override fun onFilmClick(
