@@ -17,6 +17,9 @@ class FilmDetailedFragment(): Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+      /*  sharedElementEnterTransition = TransitionInflater.from(context)
+            .inflateTransition(R.transition.simple_transition)*/
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

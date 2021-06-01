@@ -66,7 +66,6 @@ data class ResultsItem(
 	var getPosterPath: String? = null
 		get() = "https://image.tmdb.org/t/p/w500$field"
 
-
 	}
 
 

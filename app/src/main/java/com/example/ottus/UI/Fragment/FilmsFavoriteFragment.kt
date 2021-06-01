@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ottus.Model.MoviesViewModel
 import com.example.ottus.Model.Network.ResultsItem
+import com.example.ottus.Model.Repo.Movies
 import com.example.ottus.R
-import com.example.ottus.RecyclerView.FilmsAdapter
+import com.example.ottus.RecyclerView.MoviesListAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmsFavoriteFragment : Fragment() {
     private val moviesViewModel: MoviesViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
-    private var adapter: FilmsAdapter? = null
+    private var adapter: MoviesListAdapter? = null
     var listenerFavoriteFragment: OnFilmsFavoriteClickListener? = null
 
 
@@ -39,13 +40,13 @@ class FilmsFavoriteFragment : Fragment() {
 
     private fun initFavoriteRecycler() {
 
-
         recyclerView = view?.findViewById<RecyclerView>(R.id.fragment_recyclerView_favorite)
 
         // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
-        adapter = FilmsAdapter(
+        adapter = MoviesListAdapter(
             LayoutInflater.from(context),
-            moviesViewModel.moviesFavorite.value!!
+            //moviesViewModel.moviesFavorite.value!! потом надо сделать отдельный адаптел для фаворитов и там уже брать из лайф даты
+            Movies.favoriteSet.toMutableList()
         ) { item, sharedTitle, sharedSubTitle, sharedImage ->
             listenerFavoriteFragment?.onFilmClickFavorite(
                 item,
@@ -64,7 +65,6 @@ class FilmsFavoriteFragment : Fragment() {
 
 
     }
-
 
     interface OnFilmsFavoriteClickListener {
         fun onFilmClickFavorite(

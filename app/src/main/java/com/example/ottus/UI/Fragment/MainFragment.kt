@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.transition.TransitionInflater
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import com.example.ottus.Model.MoviesViewModel
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,6 +18,7 @@ class MainFragment : Fragment(),
     FilmListFragment.OnFilmsClickListener,
     FilmsFavoriteFragment.OnFilmsFavoriteClickListener {
 
+    private val moviesViewModel: MoviesViewModel by viewModels()
     private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,22 +93,21 @@ class MainFragment : Fragment(),
         sharedImage: View
     ) {
         val sharedElementFragment = FilmDetailedFragment.newInstance(item)
-                 .apply {
-             sharedElementEnterTransition = TransitionInflater.from(parentFragment?.activity)
-                 .inflateTransition(R.transition.simple_transition)
-         }
+          /*       .apply {
+
+         }*/
 
         childFragmentManager
             .beginTransaction()
             //.addSharedElement(sharedTitle, "sharedTitle")
             //.addSharedElement(sharedSubTitle, "sharedSubTitle")
-            .addSharedElement(sharedImage, "sharedImage")
+           // .addSharedElement(sharedImage, "sharedImage")
             .replace(
                 R.id.fragment_container_Main,
                 sharedElementFragment,
                 "FilmsFavoriteFragment"
             )
-            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .addToBackStack("film Det frag")
             .commit()
 

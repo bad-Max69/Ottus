@@ -1,6 +1,5 @@
 package com.example.ottus.Model
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +27,11 @@ class MoviesViewModel : ViewModel() {
                 moviesRepoLiveData.value = moviesRepos
             }
         })
-        //moviesRepoLiveData.postValue(moviesTMDB)
+
+    fun removeMovieFromFavoriteList(){
+        moviesFavoriteLiveData.value = Movies.favoriteSet.toMutableList()
+
+    }
 
     }
 

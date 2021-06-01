@@ -13,12 +13,7 @@ class App: Application() {
         //TopRatedMoviesInterractor.getTopRatedMovies()
         Log.e("Live", "APPPPP get top rated movies")
 
-
-
     }
-
-
-
 
     companion object {
         var instance: App? = null

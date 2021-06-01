@@ -11,25 +11,28 @@ import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.Model.Repo.Movies
 import com.example.ottus.Model.Repo.Movies.favoriteSet
 import com.example.ottus.R
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
-class FilmsAdapter(
+class MoviesListAdapter(
+
    // private val context: Context,
     private val inflater: LayoutInflater,
     private val filmList: MutableList<ResultsItem>,
     private val listener: ((filmItem: ResultsItem, sharedTitle: View, sharedSubTitle: View, sharedImage: View) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun insertDataMovies() {
 
-        notifyItemRangeInserted(Movies.moviesTMDB.size - 1, Movies.moviesTMDB.size + 20)
 
-    }
+    fun insertDataMovies()=
+        notifyItemRangeInserted(
+            Movies.moviesTMDB.size - 1,
+            Movies.moviesTMDB.size + 20)
 
-    fun removeMovieFromFavoriteList(positionRemove: Int){
-        notifyItemRemoved(positionRemove)
 
-    }
+    fun removeMovieFromFavoriteList(positionRemove: Int) = notifyItemRemoved(positionRemove)
+
+    fun returnDeleteMovie(positionReturn: Int) = notifyItemInserted(favoriteSet.size-2)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == HEADER_VIEW_TYPE)
@@ -38,6 +41,7 @@ class FilmsAdapter(
             FilmsViewHolder(inflater.inflate(R.layout.recycler_films_item, parent, false))
 
     }
+
 
 
     override fun getItemCount() = filmList.size + 1 // в список элементов добавляется Header
@@ -61,7 +65,7 @@ class FilmsAdapter(
 
             }
 
-            // holder.checkFavourite.setOnCheckedChangeListener(null)
+            //
 
             //  holder.checkFavourite.setChecked(filmList[position-1].favorite)
             holder.checkFavourite.setOnCheckedChangeListener { _, isChecked ->
@@ -69,6 +73,13 @@ class FilmsAdapter(
 
                 //снэкбар при удалении
                 if (!isChecked) {
+
+                    val bufferItem = filmList[position]
+
+                    // filmList[position-1].favorite = true
+                    favoriteSet.remove(filmList[position])
+                    removeMovieFromFavoriteList(position)
+
 
                     Snackbar.make(
                         (holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
@@ -78,12 +89,11 @@ class FilmsAdapter(
                         .setAnchorView((holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))
                         .setAction("отменить") {
                             holder.checkFavourite.isChecked = true
+                            favoriteSet.add(bufferItem)
+                            returnDeleteMovie(position)
 
-
-                            // filmList[position-1].favorite = true
-                            Movies.favoriteSet.remove(filmList[position])
-                            removeMovieFromFavoriteList(position)
                         }
+                        .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                         .show()
                 }
 

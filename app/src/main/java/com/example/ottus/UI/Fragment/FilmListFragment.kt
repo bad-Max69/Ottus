@@ -14,13 +14,13 @@ import com.example.ottus.Model.MoviesViewModel
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.Model.Repo.Movies.moviesTMDB
 import com.example.ottus.R
-import com.example.ottus.RecyclerView.FilmsAdapter
+import com.example.ottus.RecyclerView.MoviesListAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmListFragment : Fragment() {
     private val moviesViewModel: MoviesViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
-    private var adapter: FilmsAdapter? = null
+    private var adapter: MoviesListAdapter? = null
 
     var listener: OnFilmsClickListener? = null
 
@@ -73,7 +73,7 @@ class FilmListFragment : Fragment() {
 
     private fun initRecycler(movieRepo: MutableList<ResultsItem>) {
 
-        adapter = FilmsAdapter(LayoutInflater.from(context), movieRepo)
+        adapter = MoviesListAdapter(LayoutInflater.from(context), movieRepo)
         { item, sharedTitle, sharedSubTitle, sharedImage ->
             listener?.onFilmClick(
                 item,
