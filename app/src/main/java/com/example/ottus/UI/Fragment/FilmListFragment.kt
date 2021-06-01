@@ -25,6 +25,8 @@ class FilmListFragment : Fragment() {
     var listener: OnFilmsClickListener? = null
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,9 +106,6 @@ class FilmListFragment : Fragment() {
         })
     }
 
-
-
-
     interface OnFilmsClickListener {
         fun onFilmClick(
             item: ResultsItem,
@@ -116,4 +115,6 @@ class FilmListFragment : Fragment() {
         )
 
     }
+
+
 }

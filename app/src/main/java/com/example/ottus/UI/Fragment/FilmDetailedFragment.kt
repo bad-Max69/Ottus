@@ -38,7 +38,23 @@ class FilmDetailedFragment(): Fragment() {
        //imageView.setImageResource(item.imageFilm)
         title.title = item.title
         subTitle.text = item.overview
+
+        (parentFragment as MainFragment).makeGoneBottomView()
+
+        imageView.setOnClickListener { parentFragmentManager.popBackStack() }
+
+
+
+
     }
+
+    override fun onStop() {
+        super.onStop()
+
+        (parentFragment as MainFragment).makeVisibleBottomView()
+    }
+
+
 
     companion object{
 
