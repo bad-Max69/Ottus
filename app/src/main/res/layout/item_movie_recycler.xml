@@ -16,7 +16,7 @@
 
 
         <ImageView
-            android:id="@+id/imageFilmItem"
+            android:id="@+id/imageFilmFavoriteItem"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/rateView"
 
-            app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+            app:layout_constraintStart_toEndOf="@id/imageFilmFavoriteItem"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
@@ -65,9 +65,9 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textSize="8pt"
-            app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
+            app:layout_constraintBottom_toBottomOf="@id/imageFilmFavoriteItem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageFilmItem"
+            app:layout_constraintStart_toEndOf="@id/imageFilmFavoriteItem"
 
             app:layout_constraintTop_toBottomOf="@id/titleFilmItem"
             tools:text="SubTitle SubTitle SubTitle SubTitle SubTitle SubTitle SubTitle " />
@@ -77,8 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/checkbox_selector"
-            app:layout_constraintBottom_toBottomOf="@id/imageFilmItem"
-            app:layout_constraintEnd_toEndOf="@id/imageFilmItem" />
+            app:layout_constraintBottom_toBottomOf="@id/imageFilmFavoriteItem"
+            app:layout_constraintEnd_toEndOf="@id/imageFilmFavoriteItem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

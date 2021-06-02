@@ -38,7 +38,7 @@ class MoviesListAdapter(
         return if (viewType == HEADER_VIEW_TYPE)
             FooterViewHolder(inflater.inflate(R.layout.item_footer, parent, false))
         else
-            FilmsViewHolder(inflater.inflate(R.layout.recycler_films_item, parent, false))
+            MoviesViewHolder(inflater.inflate(R.layout.item_movie_recycler, parent, false))
 
     }
 
@@ -51,7 +51,7 @@ class MoviesListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is FilmsViewHolder) {
+        if (holder is MoviesViewHolder) {
             holder.bind(filmList[position])
             holder.itemView.setOnClickListener {
                 listener?.invoke(
@@ -64,10 +64,8 @@ class MoviesListAdapter(
 
 
             }
-
-            //
-
-            //  holder.checkFavourite.setChecked(filmList[position-1].favorite)
+            val boolForCheck  = favoriteSet.contains(filmList[position])
+            holder.checkFavourite.isChecked = boolForCheck
             holder.checkFavourite.setOnCheckedChangeListener { _, isChecked ->
                 favoriteSet.add(filmList[position])
 
@@ -83,7 +81,7 @@ class MoviesListAdapter(
 
                     Snackbar.make(
                         (holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.coordinatorLayoutMain),
-                        "Удалить избранный фильм: \"${holder.title.text.toString().capitalize()}\"?",
+                        "Удален избранный фильм: \"${holder.title.text.toString().capitalize()}",
                         Snackbar.LENGTH_LONG
                     )
                         .setAnchorView((holder.title.context as Activity).findViewById<CoordinatorLayout>(R.id.bottom_navigation))

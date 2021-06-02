@@ -2,12 +2,13 @@
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="300"
     android:interpolator="@android:interpolator/linear"
-    android:transitionOrdering="together"
+    android:transitionOrdering="sequential"
     >
 
 
    <changeTransform/>
    <changeClipBounds/>
+
 
 
 </transitionSet>

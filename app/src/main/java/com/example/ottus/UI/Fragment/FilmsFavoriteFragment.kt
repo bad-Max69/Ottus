@@ -7,19 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ottus.Model.MoviesViewModel
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.Model.Repo.Movies
 import com.example.ottus.R
-import com.example.ottus.RecyclerView.MoviesListAdapter
+import com.example.ottus.RecyclerView.FavoriteListAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 
 class FilmsFavoriteFragment : Fragment() {
     private val moviesViewModel: MoviesViewModel by viewModels()
     private var recyclerView: RecyclerView? = null
-    private var adapter: MoviesListAdapter? = null
+    private var adapter: FavoriteListAdapter? = null
     var listenerFavoriteFragment: OnFilmsFavoriteClickListener? = null
 
 
@@ -41,24 +41,23 @@ class FilmsFavoriteFragment : Fragment() {
     private fun initFavoriteRecycler() {
 
         recyclerView = view?.findViewById<RecyclerView>(R.id.fragment_recyclerView_favorite)
+        recyclerView?.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL).apply { gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS}
 
         // adapter = FilmsAdapter(LayoutInflater.from(context), filmFavorite){ listenerFavoriteFragment?.onFilmClick(it)}
-        adapter = MoviesListAdapter(
+        adapter = FavoriteListAdapter(
             LayoutInflater.from(context),
             //moviesViewModel.moviesFavorite.value!! потом надо сделать отдельный адаптел для фаворитов и там уже брать из лайф даты
             Movies.favoriteSet.toMutableList()
-        ) { item, sharedTitle, sharedSubTitle, sharedImage ->
+        ) { item, sharedImage ->
             listenerFavoriteFragment?.onFilmClickFavorite(
                 item,
-                sharedTitle,
-                sharedSubTitle,
                 sharedImage
             )
         }
 
         recyclerView?.adapter = adapter
 
-        recyclerView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        //recyclerView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         recyclerView?.itemAnimator = ScaleInRightAnimator()
 
         Log.e("fragmentVeiw favorite", "onCreated")
@@ -69,8 +68,6 @@ class FilmsFavoriteFragment : Fragment() {
     interface OnFilmsFavoriteClickListener {
         fun onFilmClickFavorite(
             item: ResultsItem,
-            sharedTitle: View,
-            sharedSubTitle: View,
             sharedImage: View
         )
 

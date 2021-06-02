@@ -9,17 +9,20 @@ import com.bumptech.glide.Glide
 import com.example.ottus.Model.Network.ResultsItem
 import com.example.ottus.R
 
-class FilmsViewHolder (item: View): RecyclerView.ViewHolder (item) {
+class MoviesViewHolder (item: View): RecyclerView.ViewHolder (item) {
 
 
     val title  = item.findViewById<TextView>(R.id.titleFilmItem)
     val subTitle: TextView = item.findViewById<TextView>(R.id.subTitleFilmItem)
-    val imageFilm = item.findViewById<ImageView>(R.id.imageFilmItem)
+    val imageFilm = item.findViewById<ImageView>(R.id.imageFilmFavoriteItem)
     var checkFavourite: CheckBox = item.findViewById<CheckBox>(R.id.check_favor)
     var rate = item.findViewById<TextView>(R.id.rateView)
 
 
     fun bind (item: ResultsItem){
+
+
+
         title.text = item.title
         subTitle.text = item.overview
         rate.text = item.popularity?.toInt().toString()

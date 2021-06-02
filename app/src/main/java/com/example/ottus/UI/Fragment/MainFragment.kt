@@ -61,12 +61,9 @@ class MainFragment : Fragment(),
 
 
     private fun makeCurrentFragment(fragment: Fragment) {
-
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_Main, fragment)
             .commit()
-
-        Log.e("fragment", "Current in Main ${childFragmentManager.backStackEntryCount}")
     }
 
     override fun onAttachFragment(fragment: Fragment) {
@@ -88,10 +85,11 @@ class MainFragment : Fragment(),
 
     private fun openFilmDetailedFragment(
         item: ResultsItem,
-        sharedTitle: View,
-        sharedSubTitle: View,
+        sharedTitle: View?,
+        sharedSubTitle: View?,
         sharedImage: View
     ) {
+
         val sharedElementFragment = FilmDetailedFragment.newInstance(item)
           /*       .apply {
 
@@ -128,11 +126,9 @@ class MainFragment : Fragment(),
 
     override fun onFilmClickFavorite(
         item: ResultsItem,
-        sharedTitle: View,
-        sharedSubTitle: View,
         sharedImage: View
     ) {
-        openFilmDetailedFragment(item, sharedTitle, sharedSubTitle, sharedImage)
+        openFilmDetailedFragment(item, null, null, sharedImage)
     }
 
 
